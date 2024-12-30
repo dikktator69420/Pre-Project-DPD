@@ -23,4 +23,5 @@ async function Submit() {
     data.status === "success" ? data.result : data.message;
 
   //This is still theoretical, process.php doesnt exist yet, however, this is a functionally complete frontend
+  //as frontend is not our responsibility, this is just the bare necessitys we need for testing
 }
