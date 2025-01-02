@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  title: Address Validation API
+  version: 1.0.0
+  description: API zur Validierung und Korrektur von Adressen.
+
+servers:
+  - url: http://localhost:8000/api
+    description: Lokaler Entwicklungsserver
+
+paths:
+  /validate:
+    post:
+      summary: Validiert und korrigiert eine Adresse
+      operationId: validateAddress
+      requestBody:
+        description: Die Adresse, die geprüft werden soll
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                AdressZeile1:
+                  type: string
+                  example: "Firmenname GmbH"
+                AdressZeile2:
+                  type: string
+                  example: "Abteilung Einkauf"
+                Strasse:
+                  type: string
+                  example: "Mariahilferstraße 50/Stiege 7/8. Stock"
+                Hausnummer:
+                  type: string
+                  example: "50"
+                PLZ:
+                  type: string
+                  example: "1060"
+                Ort:
+                  type: string
+                  example: "Wien"
+                Land:
+                  type: string
+                  example: "AT"
+      responses:
+        '200':
+          description: Validierung erfolgreich
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: Statuscode
+                    example: 1
+                  corrected_address:
+                    type: object
+                    properties:
+                      Strasse:
+                        type: string
+                        example: "Mariahilfer Straße"
+                      Hausnummer:
+                        type: string
+                        example: "50"
+                      PLZ:
+                        type: string
+                        example: "1060"
+                      Ort:
+                        type: string
+                        example: "Wien"
+        '400':
+          description: Fehlende oder ungültige Eingaben
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: Statuscode
+                    example: 0
+                  message:
+                    type: string
+                    description: Fehlermeldung
+                    example: "Invalid input"
+
+components:
+  schemas:
+    Address:
+      type: object
+      properties:
+        AdressZeile1:
+          type: string
+        AdressZeile2:
+          type: string
+        Strasse:
+          type: string
+        Hausnummer:
+          type: string
+        PLZ:
+          type: string
+        Ort:
+          type: string
+        Land:
+          type: string
