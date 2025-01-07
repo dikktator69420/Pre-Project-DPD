@@ -1,6 +1,8 @@
 const URL = "placeholder";
 
 async function Submit() {
+  var Adresszeile1 = document.getElementById("Adresszeile1").value;
+  var Adresszeile2 = document.getElementById("Adresszeile2").value;
   var Straße = document.getElementById("Straße").value;
   var Hausnummer = document.getElementById("Hausnummer").value;
   var Türnummer = document.getElementById("Türnummer").value;
@@ -14,7 +16,16 @@ async function Submit() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      strings: [Straße, Hausnummer, Türnummer, PLZ, Ort, Land],
+      strings: [
+        Adresszeile1,
+        Adresszeile2,
+        Straße,
+        Hausnummer,
+        Türnummer,
+        PLZ,
+        Ort,
+        Land,
+      ],
     }),
   });
 
