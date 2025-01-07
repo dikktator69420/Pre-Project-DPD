@@ -8,7 +8,7 @@ async function Submit() {
   var Ort = document.getElementById("Ort").value;
   var Land = document.getElementById("Land").value;
 
-  const response = await fetch(`${URL}/process.php`, {
+  const response = await fetch(`http://localhost:8000/api/index.php?route=validate'`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
