@@ -5,34 +5,78 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>DPD Form</title>
   </head>
   <body>
-    <label>Adresszeile 1</label>
-    <input type="text" placeholder="Adresszeile 1" id="Adresszeile1" />
-    <p></p>
-    <label>Adresszeile 2</label>
-    <input type="text" placeholder="Adresszeile 2" id="Adresszeile2" />
-    <p></p>
-    <label>Straße</label>
-    <input type="text" placeholder="Straße" id="Straße" />
-    <p></p>
-    <label>Hausnummer</label>
-    <input type="text" placeholder="Hausnummer" id="Hausnummer" />
-    <p></p>
-    <label>Türnummer</label>
-    <input type="text" placeholder="Türnummer" id="Türnummer" />
-    <p></p>
-    <label>PLZ</label>
-    <input type="text" placeholder="PLZ" id="PLZ" />
-    <p></p>
-    <label>Ort</label>
-    <input type="text" placeholder="Ort" id="Ort" />
-    <p></p>
-    <label>Land</label>
-    <input type="text" placeholder="Land" id="Land" />
-    <p></p>
-    <button onclick="Submit()">Submit</button>
-    <p></p>
-    <label id="result"></label>
+    <!-- Header Section -->
+    <header>
+      <div class="logo">
+        <img src="Logo.png" alt="DPD Logo">
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Main Content Section -->
+    <main>
+      <section class="form-container">
+        <h1>Address Form</h1>
+        <form id="address-form">
+          <div class="form-group">
+            <label for="Adresszeile1">Adresszeile 1</label>
+            <input type="text" placeholder="Adresszeile 1" id="Adresszeile1" />
+          </div>
+
+          <div class="form-group">
+            <label for="Adresszeile2">Adresszeile 2</label>
+            <input type="text" placeholder="Adresszeile 2" id="Adresszeile2" />
+          </div>
+
+          <div class="form-group">
+            <label for="Straße">Straße</label>
+            <input type="text" placeholder="Straße" id="Straße" />
+          </div>
+
+          <div class="form-group">
+            <label for="Hausnummer">Hausnummer</label>
+            <input type="text" placeholder="Hausnummer" id="Hausnummer" />
+          </div>
+
+          <div class="form-group">
+            <label for="Türnummer">Türnummer</label>
+            <input type="text" placeholder="Türnummer" id="Türnummer" />
+          </div>
+
+          <div class="form-group">
+            <label for="PLZ">PLZ</label>
+            <input type="text" placeholder="PLZ" id="PLZ" />
+          </div>
+
+          <div class="form-group">
+            <label for="Ort">Ort</label>
+            <input type="text" placeholder="Ort" id="Ort" />
+          </div>
+
+          <div class="form-group">
+            <label for="Land">Land</label>
+            <input type="text" placeholder="Land" id="Land" />
+          </div>
+
+          <button type="button" class="btn" onclick="Submit()">Submit</button>
+        </form>
+        <p id="result"></p>
+      </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+      <p>&copy; 2025 DPD Clone. All rights reserved. <a href="#">Privacy Policy</a></p>
+    </footer>
   </body>
 </html>
