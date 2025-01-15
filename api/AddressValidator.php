@@ -61,10 +61,10 @@ class AddressValidator {
         $stmt = $this->pdo->prepare("
             SELECT * FROM addresses 
             WHERE plz = :plz 
-            AND UPPER(ort) = UPPER(:ort)
+            AND UPPER(stadt) = UPPER(:ort)
             AND (
-                UPPER(strasse) = UPPER(:strasse)
-                OR UPPER(CONCAT(strasse, ' ', hausnummer)) = UPPER(:full_street)
+                UPPER(straße) = UPPER(:strasse)
+                OR UPPER(CONCAT(straße, ' ', haus_nummer)) = UPPER(:full_street)
             )
         ");
 
@@ -136,7 +136,7 @@ class AddressValidator {
     }
 
     private function isAustrianCountryCode($country) {
-        $austrianCodes = ['AT', 'AUT', 'A', 'AUSTRIA', 'ÖSTERREICH'];
+        $austrianCodes = ['AT', 'AUT', 'OE', 'AUSTRIA', 'ÖSTERREICH'];
         return in_array(strtoupper($country), $austrianCodes);
     }
 
