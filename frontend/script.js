@@ -1,39 +1,48 @@
-const URL = "placeholder";
-
 async function Submit() {
-  var adresszeile1 = document.getElementById("Adresszeile1").value;
-  var adresszeile2 = document.getElementById("Adresszeile2").value;
-  var straße = document.getElementById("Straße").value;
-  var hausnummer = document.getElementById("Hausnummer").value;
-  var türnummer = document.getElementById("Türnummer").value;
-  var pLZ = document.getElementById("PLZ").value;
-  var ort = document.getElementById("Ort").value;
-  var land = document.getElementById("Land").value;
+  try {
+    const elements = {
+      AdressZeile1: document.getElementById("Adresszeile1"),
+      AdressZeile2: document.getElementById("Adresszeile2"),
+      Strasse: document.getElementById("Straße"),
+      Hausnummer: document.getElementById("Hausnummer"),
+      Türnummer: document.getElementById("Türnummer"),
+      PLZ: document.getElementById("PLZ"),
+      Ort: document.getElementById("Ort"),
+      Land: document.getElementById("Land"),
+    };
 
-  const address = {
-    Adresszeile1: adresszeile1,
-    Adresszeile2: adresszeile2,
-    Straße: straße,
-    Hausnummer: hausnummer,
-    Türnummer: türnummer,
-    PLZ: pLZ,
-    Ort: ort,
-    Land: land,
-  };
+    for (const [key, element] of Object.entries(elements)) {
+      if (!element) {
+        throw new Error(`Element ${key} not found`);
+      }
+    }
 
-  const response = await validateAddress(
-    address,
-    "http://localhost:8000/api/routes.php"
-  );
+    const address = Object.fromEntries(
+      Object.entries(elements).map(([key, element]) => [key, element.value])
+    );
 
-  const data = await response.json();
+    const response = await validateAddress(
+      address,
+      "http://localhost:8000/api/validate"
+    );
 
-  document.getElementById("result").textContent = data;
+    const resultElement = document.getElementById("result");
+
+    if (resultElement) {
+      resultElement.textContent = JSON.stringify(response);
+    }
+  } catch (error) {
+    console.error("Submission failed:", error);
+    const resultElement = document.getElementById("result");
+    if (resultElement) {
+      resultElement.textContent = `Error: ${error.message}`;
+    }
+  }
 }
 
 async function validateAddress(address, baseUrl) {
   try {
-    const response = await fetch(`${baseUrl}/validate`, {
+    const response = await fetch(baseUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,11 +52,12 @@ async function validateAddress(address, baseUrl) {
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(
+        `HTTP error! response is not ok! status: ${response.status}`
+      );
     }
 
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
     console.error("Address validation failed:", error);
     return {
