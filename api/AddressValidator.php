@@ -144,8 +144,8 @@ class AddressValidator {
         $stmt = $this->pdo->prepare("
             SELECT * FROM addresses 
             WHERE plz = :plz 
-            AND UPPER(ort) = UPPER(:ort)
-            AND UPPER(strasse) LIKE CONCAT(UPPER(:street_start), '%')
+            AND UPPER(stadt) = UPPER(:ort)
+            AND UPPER(straße) LIKE CONCAT(UPPER(:street_start), '%')
             LIMIT 1
         ");
 
