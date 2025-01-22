@@ -67,6 +67,8 @@ async function validateAddress(address, baseUrl) {
     return data;
   } catch (error) {
     console.error('Validation error:', error);
-    throw error;
+    throw error;  
   }
+
+  
 }

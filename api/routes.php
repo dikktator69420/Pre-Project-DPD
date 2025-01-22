@@ -20,6 +20,8 @@ function route($method, $route) {
 function route($method, $route) {
     // Add this at the start of the function
     error_log("Received request: Method=$method, Route=$route");
+
+    require_once 'C:\Users\Finian\Desktop\School\4EHIF\PRE\Pre-Project-DPD\api\AddressValidator.php';
     
     if ($method === 'OPTIONS') {
         return ['status' => 1, 'message' => 'OK'];
