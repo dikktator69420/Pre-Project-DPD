@@ -23,7 +23,7 @@ async function Submit() {
 
     const response = await validateAddress(
       address,
-      "http://localhost:8000/api/validate"
+      "http://localhost:5500/api"  // remove /validate from here
     );
 
     const resultElement = document.getElementById("result");
@@ -41,28 +41,34 @@ async function Submit() {
 }
 
 async function validateAddress(address, baseUrl) {
+  console.log('Sending request to:', `${baseUrl}/index.php?route=validate`);
+  console.log('Request body:', address);
+  
   try {
-    const response = await fetch(baseUrl, {
-      method: "POST",
+    const response = await fetch(`${baseUrl}/index.php?route=validate`, {
+      method: 'POST',  // Make sure it's uppercase
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
-      body: JSON.stringify(address),
+      mode: 'cors',  // Add this explicitly
+      body: JSON.stringify(address)
     });
 
+    console.log('Response status:', response.status);
+    console.log('Response headers:', [...response.headers.entries()]);
+
     if (!response.ok) {
-      throw new Error(
-        `HTTP error! response is not ok! status: ${response.status}`
-      );
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    return await response.json();
+    const data = await response.json();
+    console.log('Response data:', data);
+    return data;
   } catch (error) {
-    console.error("Address validation failed:", error);
-    return {
-      status: 0,
-      message: error.message || "Address validation failed",
-    };
+    console.error('Validation error:', error);
+    throw error;  
   }
+
+  
 }

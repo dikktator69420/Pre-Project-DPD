@@ -5,7 +5,7 @@ info:
   description: API zur Validierung und Korrektur von Adressen.
 
 servers:
-  - url: http://localhost:8000/api
+  - url: http://localhost:5500/api/index.php
     description: Lokaler Entwicklungsserver
 
 paths:
