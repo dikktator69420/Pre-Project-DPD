@@ -5,7 +5,7 @@ async function Submit() {
       AdressZeile2: document.getElementById("Adresszeile2"),
       Strasse: document.getElementById("Straße"),
       Hausnummer: document.getElementById("Hausnummer"),
-      Türnummer: document.getElementById("Türnummer"),
+      Tuernummer: document.getElementById("Türnummer"),
       PLZ: document.getElementById("PLZ"),
       Ort: document.getElementById("Ort"),
       Land: document.getElementById("Land"),
