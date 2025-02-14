@@ -26,26 +26,37 @@ function Submit() {
 
 // country DE
 //
-// Mariahilferstrasse
+// Mariahilfer Strasse
 //
 // strasse has hausnummer
 //
-// MaRiAhIlFeRsTrAsSe
+// MaRiAhIlFeR sTrAsSe
 //
 // ort = max rottenmanner
 
 function determineResponse(straße, hausnummer, türnummer, plz, ort, land) {
   if (land != "AT") {
     return "invalid country";
-  } else if (straße == "Mariahilferstrasse") {
-    var strasse = "Mariahilferstraße";
+  } else if (straße == "Mariahilfer Strasse") {
+    var strasse = "Mariahilfer Straße";
     return { strasse, hausnummer, türnummer, plz, ort, land };
-  } else if (straße == "Mariahilferstraße 1") {
-    var strasse = "Mariahilferstraße";
+  } else if (straße == "Mariahilfer Straße 1") {
+    var strasse = "Mariahilfer Straße";
     var hausnummer = "1";
     return { strasse, hausnummer: "1", türnummer, plz, ort, land };
-  } else if (straße == "MaRiAhIlFeRsTrAsSe") {
-    var strasse = "Mariahilferstraße";
+  } else if (straße == "MaRiAhIlFeR sTrAsSe") {
+    var strasse = "Mariahilfer Straße";
+    return { strasse, hausnummer, türnummer, plz, ort, land };
+  } else if (straße == "Mariahilfer Straße") {
+    return { strasse, hausnummer, türnummer, plz, ort, land };
+  } else if (straße == "Mariahilferstraße") {
+    var strasse = "Mariahilfer Straße";
+    return { strasse, hausnummer, türnummer, plz, ort, land };
+  } else if (straße == "Mariahilfer Str.") {
+    var strasse = "Mariahilfer Straße";
+    return { strasse, hausnummer, türnummer, plz, ort, land };
+  } else if (straße == "Spenger Gasse") {
+    var strasse = "Spengergasse";
     return { strasse, hausnummer, türnummer, plz, ort, land };
   } else {
     return "invalid input";
