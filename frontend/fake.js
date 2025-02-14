@@ -58,6 +58,8 @@ function determineResponse(straße, hausnummer, türnummer, plz, ort, land) {
   } else if (straße == "Spenger Gasse") {
     var strasse = "Spengergasse";
     return { strasse, hausnummer, türnummer, plz, ort, land };
+  } else if (straße == "Spengergasse") {
+    return { strasse, hausnummer, türnummer, plz, ort, land };
   } else {
     return "invalid input";
   }
