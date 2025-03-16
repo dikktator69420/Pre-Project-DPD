@@ -1,23 +1,4 @@
 <?php
-/*
-class AddressValidator {
-    public function validate($address) {
-        // Beispielprüfung für PLZ und Ort
-        if (empty($address['PLZ']) || empty($address['Ort'])) {
-            return ['status' => 0, 'message' => 'Missing required fields'];
-        }
-        // Füge hier die eigentliche Validierungslogik hinzu
-        return [
-            'status' => 1,
-            'corrected_address' => [
-                'Strasse' => 'Beispielstraße',
-                'Hausnummer' => '50',
-                'PLZ' => $address['PLZ'],
-                'Ort' => $address['Ort']
-            ]
-        ];
-    }
-}*/
 // AddressValidator.php
 class AddressValidator {
     private $pdo;
@@ -92,7 +73,89 @@ class AddressValidator {
         // If no exact match, try to find closest match
         return $this->findClosestMatch($normalizedAddress);
     }
-
+    
+    /**
+     * Recommend streets based on a partial street name (minimum 4 characters)
+     * 
+     * @param string $query Partial street name
+     * @return array Results with status and recommendations
+     */
+    public function recommendStrasse($query) {
+        // Input validation
+        if (empty($query) || strlen($query) < 4) {
+            return [
+                'status' => 0,
+                'message' => 'Query must be at least 4 characters long'
+            ];
+        }
+        
+        // Get streets that start with the query
+        $stmt = $this->pdo->prepare("
+            SELECT DISTINCT straße as Strasse
+            FROM addresses 
+            WHERE UPPER(straße) LIKE UPPER(:query_start)
+            ORDER BY straße ASC
+        ");
+        
+        $stmt->bindValue(':query_start', $query . '%');
+        $stmt->execute();
+        
+        $results = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        
+        if (count($results) > 0) {
+            return [
+                'status' => 1,
+                'recommendations' => $results
+            ];
+        } else {
+            return [
+                'status' => 0,
+                'message' => 'No matching streets found'
+            ];
+        }
+    }
+    
+    /**
+     * Recommend cities (Ort) based on a partial city name (minimum 4 characters)
+     * 
+     * @param string $query Partial city name
+     * @return array Results with status and recommendations
+     */
+    public function recommendStadt($query) {
+        // Input validation
+        if (empty($query) || strlen($query) < 4) {
+            return [
+                'status' => 0,
+                'message' => 'Query must be at least 4 characters long'
+            ];
+        }
+        
+        // Get cities that start with the query
+        $stmt = $this->pdo->prepare("
+            SELECT DISTINCT stadt as Ort
+            FROM addresses 
+            WHERE UPPER(stadt) LIKE UPPER(:query_start)
+            ORDER BY stadt ASC
+        ");
+        
+        $stmt->bindValue(':query_start', $query . '%');
+        $stmt->execute();
+        
+        $results = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        
+        if (count($results) > 0) {
+            return [
+                'status' => 1,
+                'recommendations' => $results
+            ];
+        } else {
+            return [
+                'status' => 0,
+                'message' => 'No matching cities found'
+            ];
+        }
+    }
+    
     private function validateInput($input) {
         $requiredFields = ['PLZ', 'Ort', 'Strasse', 'Land'];
         foreach ($requiredFields as $field) {
