@@ -2,10 +2,10 @@
 // routes.php
 
 function route($method, $route) {
-    // Add this at the start of the function
+    // Log request details for debugging
     error_log("Received request: Method=$method, Route=$route");
     
-    require_once 'C:\Users\Finian\Desktop\School\4EHIF\PRE\Pre-Project-DPD\api\AddressValidator.php';
+    require_once __DIR__ . '/AddressValidator.php';
     
     if ($method === 'OPTIONS') {
         return ['status' => 1, 'message' => 'OK'];
@@ -13,7 +13,7 @@ function route($method, $route) {
     
     try {
         if ($route === 'test') {
-            return ['status' => 1, 'message' => 'Test endpoint working'];
+            return ['status' => 1, 'message' => 'Test endpoint working with UTF-8: äöüß'];
         }
         
         $validator = new AddressValidator();
@@ -22,11 +22,13 @@ function route($method, $route) {
             $rawInput = file_get_contents('php://input');
             error_log("Received input: " . $rawInput);
             
-            $input = json_decode($rawInput, true);
+            // Use JSON_INVALID_UTF8_IGNORE flag to handle potential invalid UTF-8 sequences
+            $input = json_decode($rawInput, true, 512, JSON_INVALID_UTF8_IGNORE | JSON_UNESCAPED_UNICODE);
+            
             if (json_last_error() !== JSON_ERROR_NONE) {
                 return [
                     'status' => 0,
-                    'message' => 'Invalid JSON input: ' . json_last_error_msg()
+                    'message' => 'Invalid JSON input: ' . json_last_error_msg() . ' - ' . json_last_error()
                 ];
             }
             
@@ -36,9 +38,9 @@ function route($method, $route) {
         // Street-specific recommend route
         if ($route === 'recommend-strasse' && $method === 'POST') {
             $rawInput = file_get_contents('php://input');
-            error_log("Received recommend-streets request: " . $rawInput);
+            error_log("Received recommend-strasse request: " . $rawInput);
             
-            $input = json_decode($rawInput, true);
+            $input = json_decode($rawInput, true, 512, JSON_INVALID_UTF8_IGNORE | JSON_UNESCAPED_UNICODE);
             if (json_last_error() !== JSON_ERROR_NONE) {
                 return [
                     'status' => 0,
@@ -46,7 +48,6 @@ function route($method, $route) {
                 ];
             }
             
-            // Simply pass the query string to the recommendStreets function
             if (!isset($input['query']) || !is_string($input['query'])) {
                 return [
                     'status' => 0,
@@ -60,9 +61,9 @@ function route($method, $route) {
         // City-specific recommend route
         if ($route === 'recommend-stadt' && $method === 'POST') {
             $rawInput = file_get_contents('php://input');
-            error_log("Received recommend-cities request: " . $rawInput);
+            error_log("Received recommend-stadt request: " . $rawInput);
             
-            $input = json_decode($rawInput, true);
+            $input = json_decode($rawInput, true, 512, JSON_INVALID_UTF8_IGNORE | JSON_UNESCAPED_UNICODE);
             if (json_last_error() !== JSON_ERROR_NONE) {
                 return [
                     'status' => 0,
@@ -70,7 +71,6 @@ function route($method, $route) {
                 ];
             }
             
-            // Simply pass the query string to the recommendCities function
             if (!isset($input['query']) || !is_string($input['query'])) {
                 return [
                     'status' => 0,

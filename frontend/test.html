@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Test</title>
+  
+  <!-- Add this script to test CSS loading -->
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      // Function to check if a stylesheet is loaded
+      function isStylesheetLoaded(href) {
+        for(var i = 0; i < document.styleSheets.length; i++) {
+          var sheet = document.styleSheets[i];
+          try {
+            if(sheet.href && sheet.href.indexOf(href) !== -1) {
+              return true;
+            }
+          } catch(e) {
+            // Some CORS issues might prevent accessing the stylesheet
+            console.log('Error checking stylesheet:', e);
+          }
+        }
+        return false;
+      }
+      
+      // Check for main stylesheet
+      const mainStyleLoaded = isStylesheetLoaded('style.css');
+      const enhancedStyleLoaded = isStylesheetLoaded('enhanced-styles.css');
+      
+      // Display results
+      document.getElementById('style-status').innerHTML = 
+        `<p>Main style.css loaded: <strong>${mainStyleLoaded ? 'YES' : 'NO'}</strong></p>
+         <p>Enhanced-styles.css loaded: <strong>${enhancedStyleLoaded ? 'YES' : 'NO'}</strong></p>`;
+      
+      // List all loaded stylesheets
+      let sheetList = '<ul>';
+      for(let i = 0; i < document.styleSheets.length; i++) {
+        try {
+          sheetList += `<li>${document.styleSheets[i].href || 'Inline style'}</li>`;
+        } catch(e) {
+          sheetList += `<li>Unable to access stylesheet: ${e.message}</li>`;
+        }
+      }
+      sheetList += '</ul>';
+      
+      document.getElementById('all-stylesheets').innerHTML = 
+        `<p>All loaded stylesheets:</p>${sheetList}`;
+    });
+  </script>
+  
+  <!-- Include both stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="enhanced-styles.css">
+  
+  <!-- Add inline test styles to verify styling works -->
+  <style>
+    .test-box {
+      width: 200px;
+      height: 50px;
+      background-color: #D5261E; /* DPD Red color from your CSS */
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    
+    #debug-panel {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin: 20px 0;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <h1>CSS Loading Test</h1>
+  
+  <div class="test-box">This box should be DPD red if inline styles work</div>
+  
+  <!-- This will look different if style.css is loaded -->
+  <header>
+    <div class="logo">DPD Logo Test</div>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Services</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <!-- This will look different if enhanced-styles.css is loaded -->
+  <div class="form-group">
+    <label>Test Input</label>
+    <input type="text" class="corrected" value="This should have green background if enhanced styles work">
+  </div>
+  
+  <div id="debug-panel">
+    <h2>Stylesheet Loading Status</h2>
+    <div id="style-status">Checking stylesheet status...</div>
+    <div id="all-stylesheets">Listing stylesheets...</div>
+    
+    <h2>Path Verification</h2>
+    <p>Current page URL: <span id="current-url"></span></p>
+    <script>
+      document.getElementById('current-url').textContent = window.location.href;
+    </script>
+    
+    <h2>Check Network Tab</h2>
+    <p>Please open your browser's developer tools (F12) and check the Network tab to see if CSS files are being requested and what status codes they're returning.</p>
+  </div>
+</body>
+</html>

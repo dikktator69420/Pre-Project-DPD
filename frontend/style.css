@@ -114,3 +114,96 @@ footer a {
 footer a:hover {
   text-decoration: underline;
 }
+
+/* Add these styles to your existing style.css file */
+
+/* Form validation and feedback styles */
+.form-group {
+  position: relative;
+}
+
+input.corrected {
+  border-color: #28a745;
+  background-color: rgba(40, 167, 69, 0.1);
+  animation: highlight 3s ease-out;
+}
+
+@keyframes highlight {
+  0% { background-color: rgba(40, 167, 69, 0.3); }
+  100% { background-color: rgba(40, 167, 69, 0); }
+}
+
+/* Results messages */
+#result {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+#result.success {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+  border: 1px solid #28a745;
+}
+
+#result.error {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+#result.processing {
+  background-color: rgba(0, 123, 255, 0.1);
+  color: #0062cc;
+  border: 1px solid #0062cc;
+}
+
+/* Recommendations dropdown */
+.recommendations {
+  position: absolute;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 0 0 4px 4px;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: none;
+}
+
+.recommendation-item {
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.recommendation-item:hover {
+  background-color: #f8f9fa;
+  color: #D5261E;
+}
+
+/* Loading indicator */
+.loading-indicator {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 15px;
+  border: 2px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 2px solid #D5261E;
+  animation: spin 1s linear infinite;
+  display: none;
+}
+
+@keyframes spin {
+  0% { transform: translateY(-50%) rotate(0deg); }
+  100% { transform: translateY(-50%) rotate(360deg); }
+}
+
+input:focus + .loading-indicator {
+  display: block;
+}

@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="fake.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" href="style.css" />
-    <title>DPD Form</title>
+    <title>DPD Address Form</title>
   </head>
-  <!--php server start;   php -S localhost:5500-->
   <body>
     <!-- Header Section -->
     <header>
@@ -41,7 +40,9 @@
 
           <div class="form-group">
             <label for="Straße">Straße</label>
-            <input type="text" placeholder="Straße" id="Straße" />
+            <input type="text" placeholder="Straße" id="Straße" autocomplete="off" />
+            <div class="loading-indicator"></div>
+            <!-- Recommendations will be inserted here dynamically -->
           </div>
 
           <div class="form-group">
@@ -61,20 +62,20 @@
 
           <div class="form-group">
             <label for="Ort">Ort</label>
-            <input type="text" placeholder="Ort" id="Ort" />
+            <input type="text" placeholder="Ort" id="Ort" autocomplete="off" />
+            <div class="loading-indicator"></div>
+            <!-- Recommendations will be inserted here dynamically -->
           </div>
 
           <div class="form-group">
             <label for="Land">Land</label>
-            <input type="text" placeholder="Land" id="Land" />
+            <input type="text" placeholder="Land" id="Land" value="AT" />
           </div>
 
-          <button type="button" class="btn" onclick="Submit()">Submit</button>
+          <button type="button" class="btn" onclick="Submit()">Validate Address</button>
         </form>
-        <div style="display: flex; justify-content: center; align-items: center; text-align: center; width: 100%; padding: 10px;">
-          <h3 id="result" style="word-wrap: break-word; max-width: 80%;"></h3>
-      </div>
-      
+        
+        <div id="result"></div>
       </section>
     </main>
 
@@ -85,5 +86,8 @@
         <a href="#">Privacy Policy</a>
       </p>
     </footer>
+
+    <!-- Include JavaScript at the end of the body for better performance -->
+    <script src="script.js"></script>
   </body>
 </html>
